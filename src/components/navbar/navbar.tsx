@@ -16,7 +16,6 @@ import { FaRegBell } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 //
 import TelegramLogin from "../telegramLogin";
-import { TelegramUser } from "@/utils/types/types";
 
 import useRedux from "@/hooks/useRedux";
 import {
@@ -438,9 +437,9 @@ const SignUpModal = ({
           <CButton auth={true} onClick={() => handleAuth(false)}>
             Connect Wallet
           </CButton>
-          <button>
-            <TelegramLogin />
-          </button>
+
+          <TelegramLogin />
+
           <p>
             Don't have account?{" "}
             <span onClick={() => setModalTab(2)}>SignUp</span>

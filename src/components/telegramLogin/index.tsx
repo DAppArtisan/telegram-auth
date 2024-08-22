@@ -1,30 +1,25 @@
 "use client";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import useRedux from "@/hooks/useRedux";
-const userNameSelector = (state: RootState) => state?.user;
 import { RootState } from "@/contexts/store";
-
-export interface User {
-  username: string;
-  name: string;
-  uid: number;
-  token?: string;
-  img: string;
-}
+import { User } from "@/contexts/reducers/user";
+const userNameSelector = (state: RootState) => state?.user;
 
 const TelegramAuthComponent = () => {
-  const [{ dispatch, actions }, [user]] = useRedux([userNameSelector]);
+  const [{ dispatch, actions }, [user]] = useRedux<User>([userNameSelector]);
+
   useEffect(() => {
     // Function to handle the Telegram login callback
-    const handleTelegramAuth = (User: any) => {
-      const userData = {
-        username: user.username || "",
-        name: user.first_name || "",
-        uid: user.id || 0,
+    const handleTelegramAuth = (telegramUser: any) => {
+      const userData: User = {
+        username: telegramUser.username || "",
+        name: telegramUser.first_name || "",
+        uid: telegramUser.id || 0,
         token: "", // Assuming no token is provided via Telegram login
-        img: user.photo_url || "",
+        img: telegramUser.photo_url || "",
       };
+
+      console.log("User Data", userData);
       dispatch(actions.setUserData(userData));
     };
 
@@ -42,6 +37,7 @@ const TelegramAuthComponent = () => {
     window.addEventListener("message", (event) => {
       if (event.origin === "https://telegram.org") {
         const user = event.data;
+        console.log("User Data 2", user);
         handleTelegramAuth(user);
       }
     });
