@@ -10,9 +10,10 @@ const userNameSelector = (state: RootState) => state?.user;
 const TelegramAuthComponent = () => {
   const [{ dispatch, actions }, [user]] = useRedux<User>([userNameSelector]);
   const router = useRouter();
-  console.log("user", user);
+
   useEffect(() => {
-    // Function to parse the query parameters from the URL
+    if (!router.isReady) return; // Ensure the router is ready
+
     const getQueryParams = (url: string) => {
       const params = new URLSearchParams(new URL(url).search);
       return {
@@ -26,7 +27,6 @@ const TelegramAuthComponent = () => {
       };
     };
 
-    // Function to handle the Telegram login callback
     const handleTelegramAuth = (userParams: any) => {
       const userData: User = {
         username: userParams.username || "",
@@ -43,13 +43,11 @@ const TelegramAuthComponent = () => {
       router.replace(router.pathname, undefined, { shallow: true });
     };
 
-    // Get user parameters from the URL and process them
     const userParams = getQueryParams(window.location.href);
     if (userParams.id && userParams.username) {
       handleTelegramAuth(userParams);
     }
 
-    // Add event listener for potential message handling from Telegram (for additional scenarios)
     const handleMessage = (event: MessageEvent) => {
       if (event.origin === "https://telegram.org") {
         const user = event.data;
