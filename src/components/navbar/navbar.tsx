@@ -429,6 +429,10 @@ const SignUpModal = ({
     // }
   };
 
+  const handleTelegramAuth = (user: any) => {
+    console.log("User authenticated:", user);
+  };
+
   return (
     <div className='signUpModal'>
       {modalTab === 1 && (
@@ -437,8 +441,11 @@ const SignUpModal = ({
           <CButton auth={true} onClick={() => handleAuth(false)}>
             Connect Wallet
           </CButton>
-
-          <TelegramLogin />
+          <TelegramLogin
+            botName='communitysetupbot' // Replace with your bot's username
+            onAuth={handleTelegramAuth}
+          />
+          {/* <TelegramLogin /> */}
 
           <p>
             Don't have account?{" "}

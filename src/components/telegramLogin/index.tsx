@@ -1,62 +1,41 @@
-"use client";
-import { useEffect } from "react";
-import useRedux from "@/hooks/useRedux";
-import { RootState } from "@/contexts/store";
-import { User } from "@/contexts/reducers/user";
+import React, { useEffect } from "react";
 
-const userNameSelector = (state: RootState) => state?.user;
+interface TelegramLoginButtonProps {
+  botName: string;
+  onAuth: (user: any) => void;
+}
 
-const TelegramAuthComponent = () => {
-  const [{ dispatch, actions }, [user]] = useRedux<User>([userNameSelector]);
-
+const TelegramLoginButton: React.FC<TelegramLoginButtonProps> = ({
+  botName,
+  onAuth,
+}) => {
   useEffect(() => {
-    // Function to handle the Telegram login callback
-    const handleTelegramAuth = (telegramUser: any) => {
-      const userData: User = {
-        username: telegramUser.username || "",
-        name: telegramUser.first_name || "",
-        uid: telegramUser.id || 0,
-        token: "", // Assuming no token is provided via Telegram login
-        img: telegramUser.photo_url || "",
-      };
-
-      dispatch(actions.setUserData(userData));
-    };
-
-    // Function to handle Telegram auth event
-    const onTelegramAuth = (user: any) => {
-      handleTelegramAuth(user);
-    };
-
-    // Create and load the Telegram widget script
     const script = document.createElement("script");
-    script.src = "https://telegram.org/js/telegram-widget.js?22";
+    script.src = "https://telegram.org/js/telegram-widget.js?19";
     script.async = true;
-    script.setAttribute("data-telegram-login", "communitysetupbot");
+    script.setAttribute("data-telegram-login", botName);
     script.setAttribute("data-size", "large");
-    script.setAttribute("data-onauth", "onTelegramAuth(user)");
+    script.setAttribute("data-radius", "10");
     script.setAttribute("data-request-access", "write");
-    script.setAttribute("data-userpic", "true");
+
+    // Attach the Telegram login callback to the global window object
+    (window as any).TelegramLoginWidgetCallback = (user: any) => {
+      onAuth(user);
+    };
 
     document.getElementById("telegram-login")?.appendChild(script);
 
-    window.addEventListener("message", (event) => {
-      if (event.origin === "https://telegram.org") {
-        const user = event.data;
-        handleTelegramAuth(user);
-      }
-    });
-
+    // Clean up the script on component unmount
     return () => {
-      window.removeEventListener("message", () => {});
+      const scriptElement = document.getElementById("telegram-login");
+      if (scriptElement) {
+        scriptElement.innerHTML = ""; // Remove script
+      }
+      delete (window as any).TelegramLoginWidgetCallback; // Clean up global callback
     };
-  }, [dispatch]);
+  }, [botName, onAuth]);
 
-  return (
-    <div>
-      <div id='telegram-login'></div>
-    </div>
-  );
+  return <div id='telegram-login'></div>;
 };
 
-export default TelegramAuthComponent;
+export default TelegramLoginButton;
