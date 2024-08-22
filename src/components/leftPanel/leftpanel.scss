@@ -1,0 +1,42 @@
+@import "/src/styles";
+.left_container {
+  width: 25%;
+  max-width: 300px;
+  min-width: 200px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--primary-border);
+  height: calc(100vh - 80px);
+
+  @include lg {
+    flex: none;
+  }
+
+  div {
+    display: flex;
+
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--secondary-hov);
+    }
+    svg {
+      margin-inline: 10px;
+    }
+    h4 {
+      font-weight: 300;
+      font-size: 14px;
+      margin-top: 2px;
+    }
+  }
+  hr {
+    border: 1px solid var(--secondary-bg);
+    margin: 10px;
+  }
+  .active {
+    background-color: var(--secondary-bg);
+  }
+}

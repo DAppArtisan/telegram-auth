@@ -1,0 +1,81 @@
+.CButton {
+  padding: 7px 15px !important;
+  background-color: var(--primary) !important;
+  border: 0px !important;
+  border-radius: 5px !important;
+  color: var(--primary-text) !important;
+  font-weight: 500 !important;
+  font-size: 15px !important;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  &:hover {
+    background-color: var(--primary-hover) !important;
+    color: var(--primary-text) !important;
+  }
+  &:disabled {
+    background-color: var(--primary) !important;
+    color: var(--primary-text) !important;
+    opacity: 0.9;
+    cursor: not-allowed;
+  }
+}
+
+.CInput {
+  background: transparent !important;
+  border: 1px solid var(--primary-border) !important;
+  color: var(--primary-text) !important;
+  font-size: 18px !important;
+  padding: 10px;
+  border-radius: 5px;
+  outline: none;
+  &:focus,
+  &:active,
+  &:hover,
+  &:focus-visible {
+    background: transparent !important;
+    border: 1px solid var(--primary-text);
+    outline: none;
+    // outline: 1px solid var(--primary-text);
+  }
+  &::placeholder {
+    color: var(--label-text) !important;
+  }
+
+  &::-ms-input-placeholder {
+    /* Edge 12-18 */
+    color: var(--label-text);
+  }
+  input {
+    &::placeholder {
+      color: var(--label-text);
+    }
+
+    &::-ms-input-placeholder {
+      /* Edge 12-18 */
+      color: var(--label-text);
+    }
+  }
+}
+
+.notification_class {
+  height: 5rem;
+  $border: 1px;
+  background-clip: padding-box;
+  border-radius: 12px;
+  color: var(--pure-black);
+  background-color: var(--secondary-bg);
+  border-radius: 11px;
+  padding: 8px 5px;
+
+  // @media ($mobile) {
+  //   .notification_class {
+  //     padding: 3px;
+  //   }
+}
+
+.ant-notification-notice {
+  height: fit-content;
+}
+.ant-notification-notice-close {
+  color: var(--primary-text) !important;
+}
