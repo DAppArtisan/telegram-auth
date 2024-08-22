@@ -34,15 +34,11 @@ const TelegramAuthComponent = () => {
     script.async = true;
     script.setAttribute("data-telegram-login", "communitysetupbot");
     script.setAttribute("data-size", "large");
-    script.setAttribute(
-      "data-auth-url",
-      `${window.location.origin}/telegram-auth`
-    );
+    script.setAttribute("data-auth-url", `${window.location.origin}/`);
     script.setAttribute("data-request-access", "write");
     script.setAttribute("data-userpic", "true"); // To include user's profile picture
     document.getElementById("telegram-login")?.appendChild(script);
 
-    // Event listener for Telegram login (This will depend on how Telegram returns the data)
     window.addEventListener("message", (event) => {
       if (event.origin === "https://telegram.org") {
         const user = event.data;
