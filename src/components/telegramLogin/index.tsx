@@ -1,6 +1,5 @@
 "use client";
 import { useEffect } from "react";
-import { useRouter } from "next/router";
 import useRedux from "@/hooks/useRedux";
 import { RootState } from "@/contexts/store";
 import { User } from "@/contexts/reducers/user";
@@ -9,58 +8,49 @@ const userNameSelector = (state: RootState) => state?.user;
 
 const TelegramAuthComponent = () => {
   const [{ dispatch, actions }, [user]] = useRedux<User>([userNameSelector]);
-  const router = useRouter();
 
   useEffect(() => {
-    if (!router.isReady) return; // Ensure the router is ready
-
-    const getQueryParams = (url: string) => {
-      const params = new URLSearchParams(new URL(url).search);
-      return {
-        id: params.get("id"),
-        first_name: params.get("first_name"),
-        last_name: params.get("last_name"),
-        username: params.get("username"),
-        photo_url: params.get("photo_url"),
-        auth_date: params.get("auth_date"),
-        hash: params.get("hash"),
-      };
-    };
-
-    const handleTelegramAuth = (userParams: any) => {
+    // Function to handle the Telegram login callback
+    const handleTelegramAuth = (telegramUser: any) => {
       const userData: User = {
-        username: userParams.username || "",
-        name: `${userParams.first_name || ""} ${userParams.last_name || ""}`,
-        uid: parseInt(userParams.id || "0", 10),
+        username: telegramUser.username || "",
+        name: telegramUser.first_name || "",
+        uid: telegramUser.id || 0,
         token: "", // Assuming no token is provided via Telegram login
-        img: userParams.photo_url || "",
+        img: telegramUser.photo_url || "",
       };
 
-      // Store user data in Redux
       dispatch(actions.setUserData(userData));
-
-      // Remove query parameters from the URL and refresh the page
-      router.replace(router.pathname, undefined, { shallow: true });
     };
 
-    const userParams = getQueryParams(window.location.href);
-    if (userParams.id && userParams.username) {
-      handleTelegramAuth(userParams);
-    }
+    // Function to handle Telegram auth event
+    const onTelegramAuth = (user: any) => {
+      handleTelegramAuth(user);
+    };
 
-    const handleMessage = (event: MessageEvent) => {
+    // Create and load the Telegram widget script
+    const script = document.createElement("script");
+    script.src = "https://telegram.org/js/telegram-widget.js?22";
+    script.async = true;
+    script.setAttribute("data-telegram-login", "communitysetupbot");
+    script.setAttribute("data-size", "large");
+    script.setAttribute("data-onauth", "onTelegramAuth(user)");
+    script.setAttribute("data-request-access", "write");
+    script.setAttribute("data-userpic", "true");
+
+    document.getElementById("telegram-login")?.appendChild(script);
+
+    window.addEventListener("message", (event) => {
       if (event.origin === "https://telegram.org") {
         const user = event.data;
         handleTelegramAuth(user);
       }
-    };
-
-    window.addEventListener("message", handleMessage);
+    });
 
     return () => {
-      window.removeEventListener("message", handleMessage);
+      window.removeEventListener("message", () => {});
     };
-  }, [dispatch, router]);
+  }, [dispatch]);
 
   return (
     <div>
