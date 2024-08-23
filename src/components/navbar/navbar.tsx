@@ -55,10 +55,11 @@ const msg = sigMsg;
 
 const commonSelector = (state: RootState) => state?.common;
 const userNameSelector = (state: RootState) => state?.user;
+const tgBotName = process.env.TG_BOT_NAME;
 
 export default function Navbar() {
   const userAccount = useAccount();
-
+  console.log("bot name ", tgBotName);
   const [{ dispatch, actions }, [user, common]] = useRedux([
     userNameSelector,
     commonSelector,
@@ -357,8 +358,6 @@ const SignUpModal = ({
 }: ISignUpModal) => {
   const [usernameError, setUsernameError] = useState<string>("");
   const CommonSelector = (state: RootState) => state?.common;
-  const [tgUser, setTgUser] = useState<any | null>(null);
-
   const [{ dispatch, actions }, [common]] = useRedux([CommonSelector]);
   const debouncedCheckUsername = debounce(async (username: string) => {
     try {
@@ -398,7 +397,7 @@ const SignUpModal = ({
         <CButton onClick={() => handleAuth(false)}>Connect Wallet</CButton>
         <button>
           <TelegramLogin
-            botUsername='communitysetupbot'
+            botUsername={tgBotName ?? ""}
             onAuthCallback={handleTelegramAuth}
           />
         </button>

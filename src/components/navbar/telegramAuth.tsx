@@ -4,7 +4,7 @@ import { LoginButtonProps } from "@/utils/types/types";
 
 const Login = ({
   authCallbackUrl,
-  botUsername = "communitysetupbot",
+  botUsername,
   buttonSize = "large",
   cornerRadius,
   lang = "en",
@@ -20,7 +20,7 @@ const Login = ({
         onAuthCallback,
       };
     }
-
+    console.log("bot user name", botUsername);
     const script = document.createElement("script");
     script.src = `https://telegram.org/js/telegram-widget.js?${widgetVersion}`;
     script.async = true;
