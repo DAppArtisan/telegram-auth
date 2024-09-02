@@ -28,7 +28,7 @@ const Login = ({
     script.src = `https://telegram.org/js/telegram-widget.js?${widgetVersion}`;
     script.async = true;
     script.setAttribute("data-telegram-login", "7280759352");
-    script.setAttribute("data-size", buttonSize);
+    // script.setAttribute("data-size", buttonSize);
 
     if (authCallbackUrl) {
       script.setAttribute("data-auth-url", authCallbackUrl);
