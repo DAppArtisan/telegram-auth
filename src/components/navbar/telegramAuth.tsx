@@ -10,7 +10,7 @@ const Login = ({
   lang = "en",
   onAuthCallback,
   requestAccess = "write",
-  showAvatar = true,
+  showAvatar = false,
   widgetVersion = 22,
 }: LoginButtonProps) => {
   useEffect(() => {
@@ -54,7 +54,7 @@ const Login = ({
       const loginButton = document.querySelector(".tgme_widget_login_button");
       if (loginButton) {
         loginButton.innerHTML =
-          '<i class="tgme_widget_login_button_icon"></i>Add';
+          '<i class="tgme_widget_login_button_icon"></i>"Add"';
       }
     };
 
@@ -77,7 +77,7 @@ const Login = ({
   return (
     <div>
       <h1>Login with Telegram</h1>
-      <div id='telegram-login'></div>
+      <div id='telegram'>LogIN</div>
     </div>
   );
 };
