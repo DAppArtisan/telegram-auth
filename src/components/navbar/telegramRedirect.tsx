@@ -1,6 +1,6 @@
 const Navbar = () => {
   const handleAddTelegramClick = () => {
-    const botUsername = "communitysetupbot"; // Aapke bot ka username yahan likhein
+    const botUsername = "7280759352"; // Aapke bot ka username yahan likhein
     const authCallbackUrl = encodeURIComponent(
       "https://telegram-auth-five.vercel.app/"
     ); // Callback URL ko yahan likhein

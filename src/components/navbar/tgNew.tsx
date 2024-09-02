@@ -43,7 +43,7 @@ const TelegramLogin = () => {
       script.onload = () => {
         (window as any).TWidgetLogin.init(
           "widget_login",
-          547043436,
+          7280759352,
           { origin: "https://core.telegram.org" },
           false,
           "en"
