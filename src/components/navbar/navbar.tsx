@@ -390,6 +390,18 @@ const SignUpModal = ({
   const handleTelegramAuth = (user: TelegramAuthData) => {
     console.log("User authenticated:", user);
   };
+
+  const handleAddTelegramClick = () => {
+    const botUsername = "your-bot-username"; // Aapke bot ka username yahan likhein
+    const authCallbackUrl = encodeURIComponent("your-auth-callback-url"); // Callback URL ko yahan likhein
+
+    // Telegram authentication URL generate karein
+    const telegramAuthUrl = `https://oauth.telegram.org/auth?bot_id=${botUsername}&origin=${authCallbackUrl}&request_access=write`;
+
+    // User ko Telegram authentication page par redirect karein
+    window.location.href = telegramAuthUrl;
+  };
+
   return (
     <div className='signUpModal'>
       <div className='login'>
@@ -401,6 +413,7 @@ const SignUpModal = ({
             onAuthCallback={handleTelegramAuth}
           />
         </button>
+        <button onClick={handleAddTelegramClick}>Add Telegram</button>
       </div>
       <Divider className='divider'>Or</Divider>
       <div className='signup'>

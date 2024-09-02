@@ -20,7 +20,10 @@ const Login = ({
         onAuthCallback,
       };
     }
+
     console.log("bot user name", botUsername);
+
+    // Create the Telegram widget script
     const script = document.createElement("script");
     script.src = `https://telegram.org/js/telegram-widget.js?${widgetVersion}`;
     script.async = true;
@@ -43,8 +46,19 @@ const Login = ({
     script.setAttribute("data-lang", lang);
     script.setAttribute("data-request-access", requestAccess);
 
+    // Append the script to the DOM
     document.getElementById("telegram-login")?.appendChild(script);
 
+    // Customize the button text after the widget is loaded
+    script.onload = () => {
+      const loginButton = document.querySelector(".tgme_widget_login_button");
+      if (loginButton) {
+        loginButton.innerHTML =
+          '<i class="tgme_widget_login_button_icon"></i>Add';
+      }
+    };
+
+    // Clean up the script on unmount
     return () => {
       document.getElementById("telegram-login")?.removeChild(script);
     };
