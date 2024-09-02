@@ -392,8 +392,10 @@ const SignUpModal = ({
   };
 
   const handleAddTelegramClick = () => {
-    const botUsername = "your-bot-username"; // Aapke bot ka username yahan likhein
-    const authCallbackUrl = encodeURIComponent("your-auth-callback-url"); // Callback URL ko yahan likhein
+    const botUsername = "communitysetupbot"; // Aapke bot ka username yahan likhein
+    const authCallbackUrl = encodeURIComponent(
+      "https://telegram-auth-five.vercel.app/"
+    ); // Callback URL ko yahan likhein
 
     // Telegram authentication URL generate karein
     const telegramAuthUrl = `https://oauth.telegram.org/auth?bot_id=${botUsername}&origin=${authCallbackUrl}&request_access=write`;
