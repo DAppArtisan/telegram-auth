@@ -18,6 +18,8 @@ import { IoSearch } from "react-icons/io5";
 import TelegramLogin from "./telegramAuth";
 import { TelegramAuthData } from "@/utils/types/types";
 
+import TGNew from "./tgNew";
+
 import useRedux from "@/hooks/useRedux";
 import {
   fetchUserById,
@@ -416,6 +418,8 @@ const SignUpModal = ({
           />
         </button>
         <button onClick={handleAddTelegramClick}>Add Telegram</button>
+
+        <TGNew />
       </div>
       <Divider className='divider'>Or</Divider>
       <div className='signup'>
