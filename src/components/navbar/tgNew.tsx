@@ -157,7 +157,7 @@ const TelegramAuth = () => {
     <button
       onClick={() =>
         window.Telegram.Login.auth(
-          { bot_id: "YOUR_BOT_ID", request_access: true },
+          { bot_id: "7280759352", request_access: true },
           (data) => {
             if (!data) {
               console.error("Authorization failed");
