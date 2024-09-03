@@ -5,12 +5,11 @@ import { LoginButtonProps } from "@/utils/types/types";
 const Login = ({
   authCallbackUrl,
   botUsername,
-  buttonSize = "large",
-  cornerRadius,
+  // buttonSize = "large",
+  // cornerRadius,
   lang = "en",
   onAuthCallback,
   requestAccess = "write",
-  showAvatar = true,
   widgetVersion = 22,
 }: LoginButtonProps) => {
   useEffect(() => {
@@ -39,10 +38,7 @@ const Login = ({
       );
     }
 
-    if (cornerRadius) {
-      script.setAttribute("data-radius", `${cornerRadius}`);
-    }
-    script.setAttribute("data-userpic", JSON.stringify(Boolean(showAvatar)));
+    // script.setAttribute("data-userpic", JSON.stringify(Boolean(showAvatar)));
     script.setAttribute("data-lang", lang);
     script.setAttribute("data-request-access", requestAccess);
 
@@ -65,12 +61,9 @@ const Login = ({
   }, [
     authCallbackUrl,
     botUsername,
-    buttonSize,
-    cornerRadius,
     lang,
     onAuthCallback,
     requestAccess,
-    showAvatar,
     widgetVersion,
   ]);
 
