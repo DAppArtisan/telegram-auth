@@ -402,7 +402,6 @@ const SignUpModal = ({
     // Telegram authentication URL generate karein
     const telegramAuthUrl = `https://oauth.telegram.org/auth?bot_id=${botUsername}&origin=${authCallbackUrl}&request_access=write`;
 
-    // User ko Telegram authentication page par redirect karein
     window.location.href = telegramAuthUrl;
   };
 

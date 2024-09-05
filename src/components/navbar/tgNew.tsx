@@ -74,7 +74,6 @@
 // };
 
 // export default TelegramAuth;
-import { useEffect } from "react";
 
 interface TelegramLoginData {
   auth_date: number;
